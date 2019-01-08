@@ -110,6 +110,9 @@ func (a *App) Serve() {
 		log.Panic(err)
 	}
 
+	a.historyQ.Session.DB.Close()
+	a.coreQ.Session.DB.Close()
+
 	log.Info("stopped")
 }
 
@@ -117,9 +120,6 @@ func (a *App) Serve() {
 func (a *App) Close() {
 	a.cancel()
 	a.ticks.Stop()
-
-	a.historyQ.Session.DB.Close()
-	a.coreQ.Session.DB.Close()
 }
 
 // HistoryQ returns a helper object for performing sql queries against the
